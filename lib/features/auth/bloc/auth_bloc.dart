@@ -1,9 +1,9 @@
+import 'package:firebase_playground/features/auth/data/auth_repository.dart';
+import 'package:firebase_playground/features/auth/data/user_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../../data/auth_repository.dart';
-import '../../../data/user_model.dart';
 
 // Events
 abstract class AuthEvent extends Equatable {

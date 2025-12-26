@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-import '../../../data/note_model.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_playground/features/database/data/note_model.dart';
 
 abstract class DatabaseRepository {
   Future<List<NoteModel>> getNotes({bool useRealtimeDatabase = false});
@@ -42,7 +41,9 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
       final notes = <NoteModel>[];
       final data = snapshot.value as Map<dynamic, dynamic>;
       data.forEach((key, value) {
-        notes.add(NoteModel.fromRealtimeDatabase(key, value as Map<dynamic, dynamic>));
+        notes.add(
+          NoteModel.fromRealtimeDatabase(key, value as Map<dynamic, dynamic>),
+        );
       });
       notes.sort((a, b) => b.createdAt.compareTo(a.createdAt));
       return notes;
@@ -64,7 +65,7 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
     if (_userId == null) throw Exception('User not authenticated');
 
     final now = DateTime.now();
-    
+
     if (useRealtimeDatabase) {
       final newRef = _notesRef.push();
       final note = NoteModel(
@@ -95,7 +96,10 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
   }
 
   @override
-  Future<void> updateNote(NoteModel note, {bool useRealtimeDatabase = false}) async {
+  Future<void> updateNote(
+    NoteModel note, {
+    bool useRealtimeDatabase = false,
+  }) async {
     if (_userId == null) throw Exception('User not authenticated');
 
     final updatedNote = note.copyWith(updatedAt: DateTime.now());
@@ -108,7 +112,10 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
   }
 
   @override
-  Future<void> deleteNote(String noteId, {bool useRealtimeDatabase = false}) async {
+  Future<void> deleteNote(
+    String noteId, {
+    bool useRealtimeDatabase = false,
+  }) async {
     if (_userId == null) throw Exception('User not authenticated');
 
     if (useRealtimeDatabase) {
@@ -128,7 +135,9 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
         final data = event.snapshot.value as Map<dynamic, dynamic>;
         final notes = <NoteModel>[];
         data.forEach((key, value) {
-          notes.add(NoteModel.fromRealtimeDatabase(key, value as Map<dynamic, dynamic>));
+          notes.add(
+            NoteModel.fromRealtimeDatabase(key, value as Map<dynamic, dynamic>),
+          );
         });
         notes.sort((a, b) => b.createdAt.compareTo(a.createdAt));
         return notes;
@@ -137,8 +146,11 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
       return _notesCollection
           .orderBy('createdAt', descending: true)
           .snapshots()
-          .map((snapshot) =>
-              snapshot.docs.map((doc) => NoteModel.fromFirestore(doc)).toList());
+          .map(
+            (snapshot) => snapshot.docs
+                .map((doc) => NoteModel.fromFirestore(doc))
+                .toList(),
+          );
     }
   }
 }

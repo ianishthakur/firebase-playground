@@ -1,9 +1,10 @@
 import 'dart:io';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:equatable/equatable.dart';
+import 'package:firebase_playground/features/storage/data/file_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../data/storage_repository.dart';
-import '../../../data/file_model.dart';
 
 // Events
 abstract class StorageEvent extends Equatable {
@@ -68,15 +69,9 @@ class StorageLoaded extends StorageState {
   final List<FileModel> files;
   final int totalSize;
 
-  const StorageLoaded({
-    this.files = const [],
-    this.totalSize = 0,
-  });
+  const StorageLoaded({this.files = const [], this.totalSize = 0});
 
-  StorageLoaded copyWith({
-    List<FileModel>? files,
-    int? totalSize,
-  }) {
+  StorageLoaded copyWith({List<FileModel>? files, int? totalSize}) {
     return StorageLoaded(
       files: files ?? this.files,
       totalSize: totalSize ?? this.totalSize,
@@ -150,7 +145,10 @@ class StorageBloc extends Bloc<StorageEvent, StorageState> {
         final updatedFiles = currentState.files
             .where((file) => file.path != event.filePath)
             .toList();
-        final totalSize = updatedFiles.fold<int>(0, (sum, file) => sum + file.size);
+        final totalSize = updatedFiles.fold<int>(
+          0,
+          (sum, file) => sum + file.size,
+        );
         emit(currentState.copyWith(files: updatedFiles, totalSize: totalSize));
       } catch (e) {
         emit(StorageError(e.toString()));

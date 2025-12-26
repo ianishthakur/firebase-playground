@@ -1,9 +1,9 @@
 import 'dart:io';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:path/path.dart' as path;
 
-import '../../../data/file_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_playground/features/storage/data/file_model.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path/path.dart' as path;
 
 abstract class StorageRepository {
   Future<List<FileModel>> listFiles({String? folder});
@@ -38,17 +38,23 @@ class StorageRepositoryImpl implements StorageRepository {
         try {
           final metadata = await item.getMetadata();
           final downloadUrl = await item.getDownloadURL();
-          files.add(FileModel.fromReference(item, metadata).copyWith(
-            downloadUrl: downloadUrl,
-          ));
+          files.add(
+            FileModel.fromReference(
+              item,
+              metadata,
+            ).copyWith(downloadUrl: downloadUrl),
+          );
         } catch (e) {
           // Skip files that can't be accessed
         }
       }
 
       // Sort by creation date, newest first
-      files.sort((a, b) => (b.createdAt ?? DateTime.now())
-          .compareTo(a.createdAt ?? DateTime.now()));
+      files.sort(
+        (a, b) => (b.createdAt ?? DateTime.now()).compareTo(
+          a.createdAt ?? DateTime.now(),
+        ),
+      );
 
       return files;
     } catch (e) {
@@ -83,9 +89,10 @@ class StorageRepositoryImpl implements StorageRepository {
     final metadata = await ref.getMetadata();
     final downloadUrl = await ref.getDownloadURL();
 
-    return FileModel.fromReference(ref, metadata).copyWith(
-      downloadUrl: downloadUrl,
-    );
+    return FileModel.fromReference(
+      ref,
+      metadata,
+    ).copyWith(downloadUrl: downloadUrl);
   }
 
   @override

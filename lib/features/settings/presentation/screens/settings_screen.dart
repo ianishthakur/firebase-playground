@@ -1,13 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_playground/features/analytics/bloc/analytics_bloc.dart';
+import 'package:firebase_playground/features/remote_config/bloc/remote_config_bloc.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconsax/iconsax.dart';
 
 import '../../../../../../core/theme/app_theme.dart';
 import '../../../../../../core/widgets/premium_card.dart';
-import '../../../../../remote_config/bloc/remote_config_bloc.dart';
-import '../../../../../analytics/bloc/analytics_bloc.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -31,7 +31,9 @@ class SettingsScreen extends StatelessWidget {
           children: [
             Text(
               'Remote Config',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
             ).animate().fadeIn(duration: 400.ms),
 
             const SizedBox(height: 12),
@@ -52,52 +54,89 @@ class SettingsScreen extends StatelessWidget {
                               gradient: AppTheme.primaryGradient,
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            child: const Icon(Iconsax.setting_4, color: Colors.white, size: 22),
+                            child: const Icon(
+                              Iconsax.setting_4,
+                              color: Colors.white,
+                              size: 22,
+                            ),
                           ),
                           const SizedBox(width: 14),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Remote Config', style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
                                 Text(
-                                  state is RemoteConfigLoaded ? 'Loaded' : 'Loading...',
-                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                        color: state is RemoteConfigLoaded ? AppTheme.successColor : AppTheme.warningColor,
+                                  'Remote Config',
+                                  style: Theme.of(context).textTheme.titleSmall
+                                      ?.copyWith(fontWeight: FontWeight.w600),
+                                ),
+                                Text(
+                                  state is RemoteConfigLoaded
+                                      ? 'Loaded'
+                                      : 'Loading...',
+                                  style: Theme.of(context).textTheme.bodySmall
+                                      ?.copyWith(
+                                        color: state is RemoteConfigLoaded
+                                            ? AppTheme.successColor
+                                            : AppTheme.warningColor,
                                       ),
                                 ),
                               ],
                             ),
                           ),
                           TextButton(
-                            onPressed: () => context.read<RemoteConfigBloc>().add(RemoteConfigFetch()),
+                            onPressed: () => context
+                                .read<RemoteConfigBloc>()
+                                .add(RemoteConfigFetch()),
                             child: const Text('Refresh'),
                           ),
                         ],
                       ),
-                      if (state is RemoteConfigLoaded && state.values.isNotEmpty) ...[
+                      if (state is RemoteConfigLoaded &&
+                          state.values.isNotEmpty) ...[
                         const SizedBox(height: 16),
                         const Divider(),
                         const SizedBox(height: 12),
-                        ...state.values.entries.take(5).map((entry) => Padding(
-                              padding: const EdgeInsets.only(bottom: 8),
-                              child: Row(
-                                children: [
-                                  Expanded(child: Text(entry.key, style: Theme.of(context).textTheme.bodySmall)),
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                    decoration: BoxDecoration(
-                                      color: isDark ? Colors.white.withOpacity(0.1) : Colors.grey.withOpacity(0.1),
-                                      borderRadius: BorderRadius.circular(4),
+                        ...state.values.entries
+                            .take(5)
+                            .map(
+                              (entry) => Padding(
+                                padding: const EdgeInsets.only(bottom: 8),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        entry.key,
+                                        style: Theme.of(
+                                          context,
+                                        ).textTheme.bodySmall,
+                                      ),
                                     ),
-                                    child: Text(
-                                      entry.value.toString().length > 20 ? '${entry.value.toString().substring(0, 20)}...' : entry.value.toString(),
-                                      style: Theme.of(context).textTheme.labelSmall?.copyWith(fontFamily: 'monospace'),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 8,
+                                        vertical: 4,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: isDark
+                                            ? Colors.white.withOpacity(0.1)
+                                            : Colors.grey.withOpacity(0.1),
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      child: Text(
+                                        entry.value.toString().length > 20
+                                            ? '${entry.value.toString().substring(0, 20)}...'
+                                            : entry.value.toString(),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall
+                                            ?.copyWith(fontFamily: 'monospace'),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            )),
+                            ),
                       ],
                     ],
                   ),
@@ -109,7 +148,9 @@ class SettingsScreen extends StatelessWidget {
 
             Text(
               'Analytics & Monitoring',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
             ).animate().fadeIn(delay: 200.ms, duration: 400.ms),
 
             const SizedBox(height: 12),
@@ -122,8 +163,11 @@ class SettingsScreen extends StatelessWidget {
               AppTheme.accentGradient,
               () {
                 context.read<AnalyticsBloc>().add(
-                      const AnalyticsLogEvent(name: 'test_event', parameters: {'source': 'settings'}),
-                    );
+                  const AnalyticsLogEvent(
+                    name: 'test_event',
+                    parameters: {'source': 'settings'},
+                  ),
+                );
                 _showSnackBar(context, 'Analytics event logged!');
               },
               0,
@@ -152,11 +196,13 @@ class SettingsScreen extends StatelessWidget {
               Iconsax.activity,
               'Log Screen View',
               'Track this screen in Analytics',
-              const LinearGradient(colors: [Color(0xFF8B5CF6), Color(0xFFEC4899)]),
+              const LinearGradient(
+                colors: [Color(0xFF8B5CF6), Color(0xFFEC4899)],
+              ),
               () {
                 context.read<AnalyticsBloc>().add(
-                      const AnalyticsLogScreenView(screenName: 'settings_screen'),
-                    );
+                  const AnalyticsLogScreenView(screenName: 'settings_screen'),
+                );
                 _showSnackBar(context, 'Screen view logged!');
               },
               2,
@@ -166,7 +212,9 @@ class SettingsScreen extends StatelessWidget {
 
             Text(
               'Firebase Services Status',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
             ).animate().fadeIn(delay: 500.ms, duration: 400.ms),
 
             const SizedBox(height: 12),
@@ -194,7 +242,9 @@ class SettingsScreen extends StatelessWidget {
 
             Text(
               'About',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
             ).animate().fadeIn(delay: 700.ms, duration: 400.ms),
 
             const SizedBox(height: 12),
@@ -212,15 +262,26 @@ class SettingsScreen extends StatelessWidget {
                           gradient: AppTheme.primaryGradient,
                           borderRadius: BorderRadius.circular(16),
                         ),
-                        child: const Icon(Icons.local_fire_department_rounded, color: Colors.white, size: 28),
+                        child: const Icon(
+                          Icons.local_fire_department_rounded,
+                          color: Colors.white,
+                          size: 28,
+                        ),
                       ),
                       const SizedBox(width: 16),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Firebase Showcase', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
-                            Text('Version 1.0.0', style: Theme.of(context).textTheme.bodySmall),
+                            Text(
+                              'Firebase Showcase',
+                              style: Theme.of(context).textTheme.titleMedium
+                                  ?.copyWith(fontWeight: FontWeight.w600),
+                            ),
+                            Text(
+                              'Version 1.0.0',
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
                           ],
                         ),
                       ),
@@ -231,7 +292,9 @@ class SettingsScreen extends StatelessWidget {
                   const SizedBox(height: 12),
                   Text(
                     'A comprehensive Flutter app showcasing all Firebase free tier features with modern UI/UX and BLoC state management.',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppTheme.lightTextSecondary),
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: AppTheme.lightTextSecondary,
+                    ),
                   ),
                   const SizedBox(height: 16),
                   Wrap(
@@ -265,31 +328,52 @@ class SettingsScreen extends StatelessWidget {
     int index,
   ) {
     return PremiumCard(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(16),
-      onTap: onTap,
-      child: Row(
-        children: [
-          Container(
-            width: 44,
-            height: 44,
-            decoration: BoxDecoration(gradient: gradient, borderRadius: BorderRadius.circular(12)),
-            child: Icon(icon, color: Colors.white, size: 22),
+          margin: const EdgeInsets.only(bottom: 12),
+          padding: const EdgeInsets.all(16),
+          onTap: onTap,
+          child: Row(
+            children: [
+              Container(
+                width: 44,
+                height: 44,
+                decoration: BoxDecoration(
+                  gradient: gradient,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(icon, color: Colors.white, size: 22),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Text(
+                      subtitle,
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(
+                Iconsax.arrow_right_3,
+                size: 18,
+                color: AppTheme.lightTextSecondary,
+              ),
+            ],
           ),
-          const SizedBox(width: 14),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(title, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
-                Text(subtitle, style: Theme.of(context).textTheme.bodySmall),
-              ],
-            ),
-          ),
-          const Icon(Iconsax.arrow_right_3, size: 18, color: AppTheme.lightTextSecondary),
-        ],
-      ),
-    ).animate().fadeIn(delay: Duration(milliseconds: 200 + (100 * index)), duration: 400.ms).slideX(begin: 0.1, end: 0);
+        )
+        .animate()
+        .fadeIn(
+          delay: Duration(milliseconds: 200 + (100 * index)),
+          duration: 400.ms,
+        )
+        .slideX(begin: 0.1, end: 0);
   }
 
   Widget _buildStatusRow(BuildContext context, String service, bool active) {
@@ -297,21 +381,29 @@ class SettingsScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         children: [
-          Icon(active ? Iconsax.tick_circle : Iconsax.close_circle, size: 18, color: active ? AppTheme.successColor : AppTheme.errorColor),
+          Icon(
+            active ? Iconsax.tick_circle : Iconsax.close_circle,
+            size: 18,
+            color: active ? AppTheme.successColor : AppTheme.errorColor,
+          ),
           const SizedBox(width: 12),
-          Expanded(child: Text(service, style: Theme.of(context).textTheme.bodyMedium)),
+          Expanded(
+            child: Text(service, style: Theme.of(context).textTheme.bodyMedium),
+          ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
-              color: active ? AppTheme.successColor.withOpacity(0.1) : AppTheme.errorColor.withOpacity(0.1),
+              color: active
+                  ? AppTheme.successColor.withOpacity(0.1)
+                  : AppTheme.errorColor.withOpacity(0.1),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Text(
               active ? 'Active' : 'Inactive',
               style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                    color: active ? AppTheme.successColor : AppTheme.errorColor,
-                    fontWeight: FontWeight.w600,
-                  ),
+                color: active ? AppTheme.successColor : AppTheme.errorColor,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ],
@@ -326,7 +418,13 @@ class SettingsScreen extends StatelessWidget {
         color: AppTheme.primaryColor.withOpacity(0.1),
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Text(label, style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppTheme.primaryColor, fontWeight: FontWeight.w600)),
+      child: Text(
+        label,
+        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+          color: AppTheme.primaryColor,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
     );
   }
 
@@ -336,7 +434,9 @@ class SettingsScreen extends StatelessWidget {
         content: Text(message),
         behavior: SnackBarBehavior.floating,
         backgroundColor: AppTheme.successColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppTheme.radiusMd)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppTheme.radiusMd),
+        ),
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:firebase_playground/features/notifications/bloc/notification_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,8 +7,6 @@ import 'package:iconsax/iconsax.dart';
 
 import '../../../../../../core/theme/app_theme.dart';
 import '../../../../../../core/widgets/premium_card.dart';
-import '../../../../../../core/widgets/premium_button.dart';
-import '../../../../bloc/notifications_bloc.dart';
 
 class NotificationsScreen extends StatelessWidget {
   const NotificationsScreen({super.key});

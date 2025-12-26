@@ -1,4 +1,4 @@
-package com.example.firebase_playground
+package com.firebase.playground
 
 import io.flutter.embedding.android.FlutterActivity
 

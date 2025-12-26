@@ -1,8 +1,8 @@
+import 'package:firebase_playground/features/database/data/note_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../data/database_repository.dart';
-import '../../../data/note_model.dart';
 
 // Events
 abstract class DatabaseEvent extends Equatable {

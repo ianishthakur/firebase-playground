@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:firebase_playground/features/storage/data/file_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -12,7 +13,6 @@ import '../../../../../../core/widgets/premium_card.dart';
 import '../../../../../../core/widgets/premium_button.dart';
 import '../../../../../../core/di/injection.dart';
 import '../../bloc/storage_bloc.dart';
-import '../../../../data/file_model.dart';
 
 class StorageScreen extends StatelessWidget {
   const StorageScreen({super.key});

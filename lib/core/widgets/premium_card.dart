@@ -1,6 +1,6 @@
+import 'package:firebase_playground/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import '../../theme/app_theme.dart';
 
 /// Premium Card with hover effects and gradients
 class PremiumCard extends StatefulWidget {

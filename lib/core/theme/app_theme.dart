@@ -11,32 +11,32 @@ class AppTheme {
   static const Color successColor = Color(0xFF10B981); // Emerald
   static const Color warningColor = Color(0xFFF59E0B); // Amber
   static const Color errorColor = Color(0xFFEF4444); // Red
-  
+
   // Gradient Colors
   static const LinearGradient primaryGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [Color(0xFF6366F1), Color(0xFF8B5CF6)],
   );
-  
+
   static const LinearGradient accentGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [Color(0xFF06B6D4), Color(0xFF10B981)],
   );
-  
+
   static const LinearGradient warmGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [Color(0xFFF59E0B), Color(0xFFEF4444)],
   );
-  
+
   static const LinearGradient darkGradient = LinearGradient(
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
     colors: [Color(0xFF1E1B4B), Color(0xFF0F172A)],
   );
-  
+
   // Light Theme Colors
   static const Color lightBackground = Color(0xFFFAFAFC);
   static const Color lightSurface = Color(0xFFFFFFFF);
@@ -44,7 +44,7 @@ class AppTheme {
   static const Color lightText = Color(0xFF1E293B);
   static const Color lightTextSecondary = Color(0xFF64748B);
   static const Color lightBorder = Color(0xFFE2E8F0);
-  
+
   // Dark Theme Colors
   static const Color darkBackground = Color(0xFF0F172A);
   static const Color darkSurface = Color(0xFF1E293B);
@@ -60,7 +60,7 @@ class AppTheme {
   static const double radiusLg = 16.0;
   static const double radiusXl = 24.0;
   static const double radiusXxl = 32.0;
-  
+
   // Spacing
   static const double spacingXs = 4.0;
   static const double spacingSm = 8.0;
@@ -209,7 +209,7 @@ class AppTheme {
         letterSpacing: 0.5,
       ),
     ),
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       elevation: 0,
       color: lightCard,
       shape: RoundedRectangleBorder(
@@ -304,10 +304,7 @@ class AppTheme {
       type: BottomNavigationBarType.fixed,
       elevation: 0,
     ),
-    dividerTheme: const DividerThemeData(
-      color: lightBorder,
-      thickness: 1,
-    ),
+    dividerTheme: const DividerThemeData(color: lightBorder, thickness: 1),
     chipTheme: ChipThemeData(
       backgroundColor: lightSurface,
       labelStyle: const TextStyle(
@@ -462,7 +459,7 @@ class AppTheme {
         letterSpacing: 0.5,
       ),
     ),
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       elevation: 0,
       color: darkCard,
       shape: RoundedRectangleBorder(
@@ -557,10 +554,7 @@ class AppTheme {
       type: BottomNavigationBarType.fixed,
       elevation: 0,
     ),
-    dividerTheme: const DividerThemeData(
-      color: darkBorder,
-      thickness: 1,
-    ),
+    dividerTheme: const DividerThemeData(color: darkBorder, thickness: 1),
     chipTheme: ChipThemeData(
       backgroundColor: darkSurface,
       labelStyle: const TextStyle(

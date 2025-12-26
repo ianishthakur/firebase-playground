@@ -1,13 +1,13 @@
+import 'package:firebase_playground/features/auth/bloc/auth_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../../../../../core/theme/app_theme.dart';
-import '../../../../../../core/widgets/premium_card.dart';
 import '../../../../../../core/widgets/premium_button.dart';
-import '../../../../../auth/bloc/auth_bloc.dart';
+import '../../../../../../core/widgets/premium_card.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -32,86 +32,115 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   // Profile Header
                   PremiumCard(
-                    gradient: AppTheme.primaryGradient,
-                    hasBorder: false,
-                    padding: const EdgeInsets.all(24),
-                    child: Column(
-                      children: [
-                        Container(
-                          width: 80,
-                          height: 80,
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
-                            shape: BoxShape.circle,
-                            border: Border.all(color: Colors.white.withOpacity(0.3), width: 3),
-                          ),
-                          child: user.photoUrl != null
-                              ? ClipOval(
-                                  child: Image.network(user.photoUrl!, fit: BoxFit.cover),
-                                )
-                              : Center(
-                                  child: Text(
-                                    user.initials,
-                                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                        gradient: AppTheme.primaryGradient,
+                        hasBorder: false,
+                        padding: const EdgeInsets.all(24),
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 80,
+                              height: 80,
+                              decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(0.2),
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: Colors.white.withOpacity(0.3),
+                                  width: 3,
+                                ),
+                              ),
+                              child: user.photoUrl != null
+                                  ? ClipOval(
+                                      child: Image.network(
+                                        user.photoUrl!,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    )
+                                  : Center(
+                                      child: Text(
+                                        user.initials,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineMedium
+                                            ?.copyWith(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                      ),
+                                    ),
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              user.displayName ??
+                                  (user.isAnonymous
+                                      ? 'Anonymous User'
+                                      : 'User'),
+                              style: Theme.of(context).textTheme.titleLarge
+                                  ?.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              user.email ?? 'No email',
+                              style: Theme.of(context).textTheme.bodyMedium
+                                  ?.copyWith(
+                                    color: Colors.white.withOpacity(0.8),
+                                  ),
+                            ),
+                            const SizedBox(height: 12),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 6,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(0.2),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    user.isAnonymous
+                                        ? Iconsax.user
+                                        : Iconsax.verify,
+                                    size: 14,
+                                    color: Colors.white,
+                                  ),
+                                  const SizedBox(width: 6),
+                                  Text(
+                                    user.isAnonymous
+                                        ? 'Guest Account'
+                                        : (user.emailVerified
+                                              ? 'Verified'
+                                              : 'Not Verified'),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelSmall
+                                        ?.copyWith(
                                           color: Colors.white,
-                                          fontWeight: FontWeight.w700,
+                                          fontWeight: FontWeight.w600,
                                         ),
                                   ),
-                                ),
-                        ),
-                        const SizedBox(height: 16),
-                        Text(
-                          user.displayName ?? (user.isAnonymous ? 'Anonymous User' : 'User'),
-                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
+                                ],
                               ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 4),
-                        Text(
-                          user.email ?? 'No email',
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                color: Colors.white.withOpacity(0.8),
-                              ),
-                        ),
-                        const SizedBox(height: 12),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                user.isAnonymous ? Iconsax.user : Iconsax.verify,
-                                size: 14,
-                                color: Colors.white,
-                              ),
-                              const SizedBox(width: 6),
-                              Text(
-                                user.isAnonymous
-                                    ? 'Guest Account'
-                                    : (user.emailVerified ? 'Verified' : 'Not Verified'),
-                                style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ).animate().fadeIn(duration: 400.ms).slideY(begin: -0.2, end: 0),
+                      )
+                      .animate()
+                      .fadeIn(duration: 400.ms)
+                      .slideY(begin: -0.2, end: 0),
 
                   const SizedBox(height: 24),
 
                   // Account Info
                   Text(
                     'Account Information',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
                   ).animate().fadeIn(delay: 200.ms, duration: 400.ms),
 
                   const SizedBox(height: 16),
@@ -161,7 +190,9 @@ class ProfileScreen extends StatelessWidget {
                   // Auth Providers
                   Text(
                     'Sign-in Methods',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
                   ).animate().fadeIn(delay: 500.ms, duration: 400.ms),
 
                   const SizedBox(height: 16),
@@ -171,16 +202,26 @@ class ProfileScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         if (user.isAnonymous)
-                          _buildProviderRow(context, Iconsax.user, 'Anonymous', true)
+                          _buildProviderRow(
+                            context,
+                            Iconsax.user,
+                            'Anonymous',
+                            true,
+                          )
                         else if (user.providers.isEmpty)
-                          _buildProviderRow(context, Iconsax.key, 'Email/Password', true)
+                          _buildProviderRow(
+                            context,
+                            Iconsax.key,
+                            'Email/Password',
+                            true,
+                          )
                         else
                           ...user.providers.map((provider) {
                             IconData icon;
                             String name;
                             switch (provider) {
                               case 'google.com':
-                                icon = Iconsax.google;
+                                icon = Iconsax.global;
                                 name = 'Google';
                                 break;
                               case 'password':
@@ -222,8 +263,8 @@ class ProfileScreen extends StatelessWidget {
                     child: Text(
                       'Delete Account',
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: AppTheme.errorColor,
-                          ),
+                        color: AppTheme.errorColor,
+                      ),
                     ),
                   ).animate().fadeIn(delay: 800.ms, duration: 400.ms),
 
@@ -237,67 +278,93 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoCard(BuildContext context, IconData icon, String label, String value, int index) {
+  Widget _buildInfoCard(
+    BuildContext context,
+    IconData icon,
+    String label,
+    String value,
+    int index,
+  ) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return PremiumCard(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(16),
-      child: Row(
-        children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: AppTheme.primaryColor.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Icon(icon, color: AppTheme.primaryColor, size: 20),
-          ),
-          const SizedBox(width: 14),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(label, style: Theme.of(context).textTheme.bodySmall),
-                Text(
-                  value,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+          margin: const EdgeInsets.only(bottom: 12),
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: AppTheme.primaryColor.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(10),
                 ),
-              ],
-            ),
+                child: Icon(icon, color: AppTheme.primaryColor, size: 20),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(label, style: Theme.of(context).textTheme.bodySmall),
+                    Text(
+                      value,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.w500,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
-    ).animate().fadeIn(
+        )
+        .animate()
+        .fadeIn(
           delay: Duration(milliseconds: 200 + (100 * index)),
           duration: 400.ms,
-        ).slideX(begin: 0.1, end: 0);
+        )
+        .slideX(begin: 0.1, end: 0);
   }
 
-  Widget _buildProviderRow(BuildContext context, IconData icon, String name, bool enabled) {
+  Widget _buildProviderRow(
+    BuildContext context,
+    IconData icon,
+    String name,
+    bool enabled,
+  ) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         children: [
-          Icon(icon, size: 20, color: enabled ? AppTheme.successColor : AppTheme.lightTextSecondary),
+          Icon(
+            icon,
+            size: 20,
+            color: enabled
+                ? AppTheme.successColor
+                : AppTheme.lightTextSecondary,
+          ),
           const SizedBox(width: 12),
           Text(name, style: Theme.of(context).textTheme.bodyMedium),
           const Spacer(),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
-              color: enabled ? AppTheme.successColor.withOpacity(0.1) : Colors.grey.withOpacity(0.1),
+              color: enabled
+                  ? AppTheme.successColor.withOpacity(0.1)
+                  : Colors.grey.withOpacity(0.1),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Text(
               enabled ? 'Active' : 'Inactive',
               style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                    color: enabled ? AppTheme.successColor : AppTheme.lightTextSecondary,
-                    fontWeight: FontWeight.w600,
-                  ),
+                color: enabled
+                    ? AppTheme.successColor
+                    : AppTheme.lightTextSecondary,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ],
@@ -322,7 +389,10 @@ class ProfileScreen extends StatelessWidget {
               context.read<AuthBloc>().add(AuthSignOutRequested());
               context.go('/login');
             },
-            child: const Text('Sign Out', style: TextStyle(color: AppTheme.errorColor)),
+            child: const Text(
+              'Sign Out',
+              style: TextStyle(color: AppTheme.errorColor),
+            ),
           ),
         ],
       ),
@@ -334,7 +404,9 @@ class ProfileScreen extends StatelessWidget {
       context: context,
       builder: (dialogContext) => AlertDialog(
         title: const Text('Delete Account'),
-        content: const Text('This action cannot be undone. All your data will be permanently deleted.'),
+        content: const Text(
+          'This action cannot be undone. All your data will be permanently deleted.',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext),
@@ -346,7 +418,10 @@ class ProfileScreen extends StatelessWidget {
               context.read<AuthBloc>().add(AuthDeleteAccountRequested());
               context.go('/login');
             },
-            child: const Text('Delete', style: TextStyle(color: AppTheme.errorColor)),
+            child: const Text(
+              'Delete',
+              style: TextStyle(color: AppTheme.errorColor),
+            ),
           ),
         ],
       ),
