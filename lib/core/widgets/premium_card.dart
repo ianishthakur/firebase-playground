@@ -70,7 +70,7 @@ class _PremiumCardState extends State<PremiumCard> {
           boxShadow: widget.hasShadow
               ? [
                   BoxShadow(
-                    color: Colors.black.withOpacity(isDark ? 0.3 : 0.08),
+                    color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.08),
                     blurRadius: _isPressed ? 8 : 20,
                     offset: Offset(0, _isPressed ? 4 : 10),
                   ),
@@ -110,10 +110,10 @@ class GlassCard extends StatelessWidget {
       margin: margin ?? EdgeInsets.zero,
       padding: padding ?? const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: (isDark ? Colors.white : Colors.black).withOpacity(opacity),
+        color: (isDark ? Colors.white : Colors.black).withValues(alpha: opacity),
         borderRadius: borderRadius ?? BorderRadius.circular(AppTheme.radiusXl),
         border: Border.all(
-          color: (isDark ? Colors.white : Colors.black).withOpacity(0.1),
+          color: (isDark ? Colors.white : Colors.black).withValues(alpha: 0.1),
           width: 1,
         ),
       ),
@@ -222,7 +222,7 @@ class StatsCard extends StatelessWidget {
             width: 44,
             height: 44,
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(AppTheme.radiusMd),
             ),
             child: Icon(

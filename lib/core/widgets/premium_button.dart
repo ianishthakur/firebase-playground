@@ -55,7 +55,7 @@ class _PremiumButtonState extends State<PremiumButton> {
           boxShadow: widget.onPressed != null
               ? [
                   BoxShadow(
-                    color: AppTheme.primaryColor.withOpacity(_isPressed ? 0.2 : 0.4),
+                    color: AppTheme.primaryColor.withValues(alpha: _isPressed ? 0.2 : 0.4),
                     blurRadius: _isPressed ? 8 : 16,
                     offset: Offset(0, _isPressed ? 4 : 8),
                   ),
@@ -143,7 +143,7 @@ class _PremiumOutlineButtonState extends State<PremiumOutlineButton> {
         transform: Matrix4.identity()..scale(_isPressed ? 0.97 : 1.0),
         transformAlignment: Alignment.center,
         decoration: BoxDecoration(
-          color: _isPressed ? color.withOpacity(0.1) : Colors.transparent,
+          color: _isPressed ? color.withValues(alpha: 0.1) : Colors.transparent,
           borderRadius: BorderRadius.circular(AppTheme.radiusMd),
           border: Border.all(color: color, width: 1.5),
         ),
@@ -216,7 +216,7 @@ class _SocialButtonState extends State<SocialButton> {
         transformAlignment: Alignment.center,
         decoration: BoxDecoration(
           color: isDark 
-              ? (_isPressed ? Colors.white.withOpacity(0.1) : Colors.white.withOpacity(0.05))
+              ? (_isPressed ? Colors.white.withValues(alpha: 0.1) : Colors.white.withValues(alpha: 0.05))
               : (_isPressed ? Colors.grey.shade100 : Colors.white),
           borderRadius: BorderRadius.circular(AppTheme.radiusMd),
           border: Border.all(
