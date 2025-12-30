@@ -31,22 +31,25 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId = "com.firebase.playground"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
-        multiDexEnabled = true
+    }
+
+    packagingOptions {
+        jniLibs {
+            useLegacyPackaging = false
+        }
     }
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("debug")
+            isMinifyEnabled = true
+            isShrinkResources = true
+            setProguardFiles(listOf(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"))
         }
     }
 
@@ -55,16 +58,20 @@ android {
 
         // Use the BoM to manage versions automatically
         implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
+        implementation(platform("com.google.firebase:firebase-appcheck-playintegrity"))
+        implementation(platform("com.google.firebase:firebase-appcheck-debug"))
 
         // Firebase dependencies (BoM handles these versions)
         implementation("com.google.firebase:firebase-analytics")
         implementation("com.google.firebase:firebase-messaging")
         implementation("com.google.firebase:firebase-perf")
+
+        implementation("com.google.mlkit:text-recognition-chinese:16.0.0")
+        implementation("com.google.mlkit:text-recognition-devanagari:16.0.0")
+        implementation("com.google.mlkit:text-recognition-japanese:16.0.0")
+        implementation("com.google.mlkit:text-recognition-korean:16.0.0")
         
-        // Manual fix for the Dynamic Links deprecation
         implementation("com.google.firebase:firebase-dynamic-links:22.1.0")
-        
-        // 2. Add this specific line to bridge the gap between ML Kit and Messaging
         implementation("com.google.firebase:firebase-iid:21.1.0")
     }
 }
