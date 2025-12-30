@@ -3,7 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:integration_test/integration_test.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -75,7 +75,8 @@ class IntegrationTestData {
   static const testDisplayName = 'Integration Test User';
 
   static const testNoteTitle = 'Integration Test Note';
-  static const testNoteContent = 'This note was created during integration testing';
+  static const testNoteContent =
+      'This note was created during integration testing';
 }
 
 /// Helper functions for common integration test operations
@@ -104,10 +105,7 @@ class IntegrationTestHelpers {
     expect(bottomNav, findsOneWidget);
 
     // Find the tab icon and tap it
-    final tabs = find.descendant(
-      of: bottomNav,
-      matching: find.byType(Icon),
-    );
+    final tabs = find.descendant(of: bottomNav, matching: find.byType(Icon));
 
     await tester.tap(tabs.at(tabIndex));
     await tester.pumpAndSettle();
