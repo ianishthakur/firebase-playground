@@ -122,8 +122,8 @@ lib/
 
 ### Prerequisites
 
-- Flutter SDK 3.2.0+
-- Dart SDK 3.0+
+- Flutter SDK 3.38.5
+- Dart SDK 3.10.4
 - Android Studio / VS Code
 - Firebase account
 
