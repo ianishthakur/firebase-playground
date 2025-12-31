@@ -130,7 +130,7 @@ lib/
 ### Step 1: Clone the Repository
 
 ```bash
-git clone <repository-url>
+git clone git@github.com:ianishthakur/firebase-playground.git
 cd firebase_flutter_app
 ```
 

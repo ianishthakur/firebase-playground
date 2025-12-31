@@ -1,7 +1,8 @@
-import 'package:firebase_playground/features/notifications/data/notification_repository.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_playground/features/notifications/data/notification_repository.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Events
 abstract class NotificationsEvent extends Equatable {
@@ -103,11 +104,13 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
     try {
       await _repository.requestPermission();
       final token = await _repository.getToken();
-      
+
       // Listen to foreground messages
       FirebaseMessaging.onMessage.listen((message) {
         add(NotificationsMessageReceived(message));
       });
+
+      debugPrint('FCM Token: $token');
 
       emit(NotificationsReady(fcmToken: token));
     } catch (e) {

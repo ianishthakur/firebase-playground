@@ -78,6 +78,7 @@ dependencies:
   glassmorphism: ^3.0.0
   animated_text_kit: ^4.2.2
   flutter_staggered_animations: ^1.1.1
+  cupertino_icons: ^1.0.8
   
   # Icons
   iconsax: ^0.0.8
@@ -98,6 +99,7 @@ dependencies:
   
   # Forms
   formz: ^0.8.0  
+
   
 
 dev_dependencies:
@@ -120,21 +122,21 @@ flutter:
     - assets/icons/
     - assets/fonts/
   
-  # fonts:
-  #   - family: Satoshi
-  #     fonts:
-  #       - asset: assets/fonts/Satoshi-Regular.ttf
-  #       - asset: assets/fonts/Satoshi-Medium.ttf
-  #         weight: 500
-  #       - asset: assets/fonts/Satoshi-Bold.ttf
-  #         weight: 700
-  #       - asset: assets/fonts/Satoshi-Black.ttf
-  #         weight: 900
-  #   - family: ClashDisplay
-  #     fonts:
-  #       - asset: assets/fonts/ClashDisplay-Medium.ttf
-  #         weight: 500
-  #       - asset: assets/fonts/ClashDisplay-Semibold.ttf
-  #         weight: 600
-  #       - asset: assets/fonts/ClashDisplay-Bold.ttf
-  #         weight: 700
+  fonts:
+    - family: Satoshi
+      fonts:
+        - asset: assets/fonts/satoshi/Satoshi-Regular.otf
+        - asset: assets/fonts/satoshi/Satoshi-Medium.otf
+          weight: 500
+        - asset: assets/fonts/satoshi/Satoshi-Bold.otf
+          weight: 700
+        - asset: assets/fonts/satoshi/Satoshi-Black.otf
+          weight: 900
+    - family: ClashDisplay
+      fonts:
+        - asset: assets/fonts/clash-display/ClashDisplay-Medium.otf
+          weight: 500
+        - asset: assets/fonts/clash-display/ClashDisplay-Semibold.otf
+          weight: 600
+        - asset: assets/fonts/clash-display/ClashDisplay-Bold.otf
+          weight: 700

@@ -29,6 +29,12 @@
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UISupportedInterfaceOrientations</key>
+	<key>NSCameraUsageDescription</key>
+    <string>Camera access for ML features and file upload</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Photo library access for file upload</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Microphone access for video recording</string>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
